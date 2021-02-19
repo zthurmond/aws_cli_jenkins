@@ -1,0 +1,10 @@
+---
+- hosts: nodes
+  tasks:
+  - name: Run Docker Container
+    become: true
+    docker_container:
+      name: hello_world
+      image: nginxdemos/hello
+      ports:
+        - "80:80"
