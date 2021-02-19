@@ -25,9 +25,9 @@ pipeline {
             }
         }
         stage('Cleanup') {
-
-        echo 'Nothing here yet'
-
+            steps {
+                echo 'Nothing here yet'
+            }
         }
     }
 }
