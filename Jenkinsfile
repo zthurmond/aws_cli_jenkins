@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     if (env.RESPONSE == 'HTTP/1.1 200 OK') {
-                        echo "env.RESPONSE"
+                        echo "Reponse code was 200"
                     } else {
                         echo 'Response code was not expected value'
                         exit 0
