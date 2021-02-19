@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Cleanup') {
             steps {
-                echo 'Nothing here yet'
+                sh 'ansible-playbook ./hello_world_cleanup.yml -i /etc/ansible/inventory -u ubuntu'
             }
         }
     }

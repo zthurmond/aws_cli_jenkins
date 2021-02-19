@@ -1,0 +1,9 @@
+---
+- hosts: nodes
+  tasks:
+  - name: Remove Docker Container
+    become: true
+    docker_container:
+      name: hello_world
+      image: nginxdemos/hello
+      state: absent
