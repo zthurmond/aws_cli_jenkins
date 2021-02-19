@@ -1,28 +1,33 @@
-var response = ""
-
 pipeline {
-    node("nodes") {
-        stages {
-            stage('Deploy') {
-                steps {
-                    sh 'ansible-playbook ./hello_world.yml -i /etc/ansible/inventory'
-                }
-            }
-            stage('Test') {
-                steps {
-                    script {
-                        response = sh (
-                            script: 'curl http://172.31.89.200',
-                            returnStdout: true
-                            ).trim()
-                    }
-                }
-            }
-            stage('Verify') {
-
-            echo "${response}"
-
+    agent { label 'master' }
+    stages {
+        stage('Deploy') {
+            steps {
+                sh 'ansible-playbook ./hello_world.yml -i /etc/ansible/inventory'
             }
         }
-    }  
+        stage('Test') {
+            environment {
+                RESPONSE = sh (
+                        script: 'curl -Is http://${REMOTE_NODE} | head -n 1',
+                        returnStdout: true
+                        ).trim()
+            }
+            steps {
+                script {
+                    if (${RESPONSE} == 'HTTP/1.1 200 OK') {
+                        echo ${RESPONSE}
+                    } else {
+                        echo 'Response code was not expected value'
+                        exit 0
+                    }  
+                }
+            }
+        }
+        stage('Cleanup') {
+
+        echo 'Nothing here yet'
+
+        }
+    }
 }
