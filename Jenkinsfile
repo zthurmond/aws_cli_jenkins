@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Deploy') {
             steps {
-                sh 'ansible-playbook ./hello_world.yml -i /etc/ansible/inventory -u ubuntu --private-key ~/.ssh/id_rsa' 
+                sh 'ansible-playbook ./hello_world.yml -i /etc/ansible/inventory -u ubuntu --private-key /home/ubuntu/.ssh/id_rsa' 
             }
         }
         stage('Test') {
